@@ -1,3 +1,9 @@
+<p align="center">
+	<a href="https://raw.githubusercontent.com/Linusar/impresion-recetas"  target="_blank">
+	<img  align="center"  alt="sun"  src="https://raw.githubusercontent.com/Linusar/impresion-recetas/master/resources/icons/96x96.png"  />
+	</a>
+</p>
+
 <h1 align="center">Welcome to ImpresionRecetas 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
@@ -22,19 +28,25 @@
 ## Install
 
 ```sh
-npm install
+yarn install
 ```
 
 ## Usage
 
 ```sh
-npm dev
+yarn dev
 ```
 
 ## Run tests
 
 ```sh
-npm package
+yarn test
+```
+
+## Run build
+
+```sh
+yarn package
 ```
 
 ## Author
@@ -44,18 +56,7 @@ npm package
 * Twitter: [@Alejo40740246](https://twitter.com/Alejo40740246)
 * Github: [@Linusar](https://github.com/Linusar)
 
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/Linusar/impresion-recetas/issues).
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
 ## 📝 License
 
 Copyright © 2019 [Alejo Bianchi](https://github.com/Linusar).<br />
 This project is [MIT](https://github.com/Linusar/impresion-recetas/blob/master/LICENSE) licensed.
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
