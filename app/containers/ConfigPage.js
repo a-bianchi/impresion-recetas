@@ -1,12 +1,17 @@
 // @flow
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
+import ConfigForm from '../components/ConfigForm';
+import Message from '../components/Message';
+import { UserContext } from '../context/UserContext';
 
-type Props = {};
+const ConfigPage = () => {
+  const { user, addUser } = useContext(UserContext);
+  return (
+    <div>
+      <Message />
+      <ConfigForm handleAction={addUser} user={user} />
+    </div>
+  );
+};
 
-export default class ConfigPage extends Component<Props> {
-  props: Props;
-
-  render() {
-    return <p>hola</p>;
-  }
-}
+export default ConfigPage;

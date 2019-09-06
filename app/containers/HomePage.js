@@ -1,13 +1,22 @@
-// @flow
-import React, { Component } from 'react';
-import Home from '../components/Home';
+import React, { useEffect, useContext } from 'react';
+import RecetaTable from '../components/RecetaTable';
+import { RecetasContext } from '../context/RecetasContext';
+import { UserContext } from '../context/UserContext';
 
-type Props = {};
+const HomePage = () => {
+  const { getUSer } = useContext(UserContext);
+  const { recetas, getRecetas } = useContext(RecetasContext);
 
-export default class HomePage extends Component<Props> {
-  props: Props;
+  useEffect(() => {
+    getUSer();
+    getRecetas();
+  }, []);
 
-  render() {
-    return <Home />;
-  }
-}
+  return (
+    <div>
+      <RecetaTable rows={recetas} />
+    </div>
+  );
+};
+
+export default HomePage;

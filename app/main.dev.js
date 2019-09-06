@@ -24,23 +24,18 @@ export default class AppUpdater {
 }
 
 let mainWindow = null;
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
 }
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
-) {
-  require('electron-debug')();
-}
-
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
+  // const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
+  const extensions = ['REACT_DEVELOPER_TOOLS'];
 
   return Promise.all(
     extensions.map(name => installer.default(installer[name], forceDownload))
@@ -88,6 +83,16 @@ app.on('ready', async () => {
       mainWindow.focus();
     }
   });
+
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.DEBUG_PROD === 'true'
+  ) {
+    // require('electron-debug')();
+    mainWindow.webContents.once('dom-ready', () =>
+      mainWindow.webContents.openDevTools()
+    );
+  }
 
   mainWindow.on('closed', () => {
     mainWindow = null;

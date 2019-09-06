@@ -3,15 +3,21 @@ import { Switch, Route } from 'react-router';
 import routes from './constants/routes';
 import App from './containers/App';
 import HomePage from './containers/HomePage';
-import CounterPage from './containers/CounterPage';
 import ConfigPage from './containers/ConfigPage';
+import CargarPage from './containers/CargarPage';
+import UserContextProvider from './context/UserContext';
+import RecetasContextProvider from './context/RecetasContext';
 
 export default () => (
   <App>
-    <Switch>
-      <Route path={routes.COUNTER} component={CounterPage} />
-      <Route path={routes.HOME} component={HomePage} />
-      <Route path={routes.CONFIG} component={ConfigPage} />
-    </Switch>
+    <UserContextProvider>
+      <RecetasContextProvider>
+        <Switch>
+          <Route path={routes.CARGAR} component={CargarPage} />
+          <Route path={routes.CONFIG} component={ConfigPage} />
+          <Route path={routes.HOME} component={HomePage} />
+        </Switch>
+      </RecetasContextProvider>
+    </UserContextProvider>
   </App>
 );

@@ -1,5 +1,6 @@
 {
   "HOME": "/",
-  "COUNTER": "/counter",
-  "CONFIG": "/configuration"
+  "CONFIG": "/config",
+  "CARGAR": "/cargar",
+  "MODIFICAR": "/"
 }

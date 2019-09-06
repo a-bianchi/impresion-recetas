@@ -1,24 +1,26 @@
 // @flow
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
-import type { Store } from '../reducers/types';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 import Routes from '../Routes';
+import MenuBar from '../components/MenuBar';
 
-type Props = {
-  store: Store,
-  history: {}
-};
+type Props = {};
 
 export default class Root extends Component<Props> {
   render() {
-    const { store, history } = this.props;
     return (
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <Routes />
-        </ConnectedRouter>
-      </Provider>
+      <React.Fragment>
+        <CssBaseline />
+        <MenuBar />
+        <main>
+          <div>
+            <Container maxWidth="md">
+              <Routes />
+            </Container>
+          </div>
+        </main>
+      </React.Fragment>
     );
   }
 }

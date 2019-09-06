@@ -1,30 +1,29 @@
+/* eslint-disable no-unused-vars */
 import React, { Fragment } from 'react';
 import { render } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
+import WebFont from 'webfontloader';
 import Root from './containers/Root';
-import { configureStore, history } from './store/configureStore';
-import './app.global.css';
+import connect from '../mongo/index';
+import User from '../mongo/models/usersModel';
+import Receta from '../mongo/models/recetasModel';
 
-const store = configureStore();
+const db = connect();
 
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
 
+WebFont.load({
+  google: {
+    families: ['Roboto:300,500,700']
+  }
+});
+
 render(
   <AppContainer>
-    <Root store={store} history={history} />
+    <BrowserRouter>
+      <Root />
+    </BrowserRouter>
   </AppContainer>,
   document.getElementById('root')
 );
-
-if (module.hot) {
-  module.hot.accept('./containers/Root', () => {
-    // eslint-disable-next-line global-require
-    const NextRoot = require('./containers/Root').default;
-    render(
-      <AppContainer>
-        <NextRoot store={store} history={history} />
-      </AppContainer>,
-      document.getElementById('root')
-    );
-  });
-}
