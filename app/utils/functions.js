@@ -9,7 +9,14 @@ const addZerosRigth = (addZeros, number) => {
 };
 
 const parseDate = date => {
-  return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+  if (date) {
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+  }
 };
 
-export { addZerosRigth, parseDate };
+const pathFolderMeppes = data => {
+  const { pathSelected, today, numeroTramite } = data;
+  return `${pathSelected}/meppes/${today}/TRAMITE-${numeroTramite}`;
+};
+
+export { addZerosRigth, parseDate, pathFolderMeppes };

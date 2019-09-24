@@ -1,8 +1,7 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Button from '@material-ui/core/Button';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
@@ -13,6 +12,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import { makeStyles } from '@material-ui/core/styles';
+import { AlertContext } from '../context/AlertContext';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -47,7 +47,7 @@ const useStyles1 = makeStyles(theme => ({
   }
 }));
 
-function MySnackbarContentWrapper(props) {
+const MySnackbarContentWrapper = props => {
   const classes = useStyles1();
   const {
     className,
@@ -82,7 +82,7 @@ function MySnackbarContentWrapper(props) {
       {...other}
     />
   );
-}
+};
 
 MySnackbarContentWrapper.propTypes = {
   className: PropTypes.string,
@@ -92,37 +92,23 @@ MySnackbarContentWrapper.propTypes = {
   variant: PropTypes.oneOf(['error', 'info', 'success', 'warning']).isRequired
 };
 
-const useStyles2 = makeStyles(theme => ({
-  margin: {
-    margin: theme.spacing(1)
-  }
-}));
-
-export default function CustomizedSnackbars() {
-  const classes = useStyles2();
-  const [open, setOpen] = React.useState(false);
-
-  function handleClick() {
-    setOpen(true);
-  }
+const AlertMessage = () => {
+  const { alert, setAlert } = useContext(AlertContext);
 
   function handleClose(event, reason) {
     if (reason === 'clickaway') {
       return;
     }
-
-    setOpen(false);
+    setAlert({
+      open: false,
+      message: '',
+      variant
+    });
   }
 
+  const { open, variant, message } = alert;
   return (
     <React.Fragment>
-      <Button
-        variant="outlined"
-        className={classes.margin}
-        onClick={handleClick}
-      >
-        Open success snackbar
-      </Button>
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
@@ -134,10 +120,12 @@ export default function CustomizedSnackbars() {
       >
         <MySnackbarContentWrapper
           onClose={handleClose}
-          variant="success"
-          message="This is a success message!"
+          variant={variant}
+          message={message}
         />
       </Snackbar>
     </React.Fragment>
   );
-}
+};
+
+export default AlertMessage;

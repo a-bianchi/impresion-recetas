@@ -2,5 +2,5 @@
   "HOME": "/",
   "CONFIG": "/config",
   "CARGAR": "/cargar",
-  "MODIFICAR": "/"
+  "LISTADO": "/lists"
 }

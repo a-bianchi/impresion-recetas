@@ -8,8 +8,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
-import WhatshotIcon from '@material-ui/icons/Whatshot';
-import GrainIcon from '@material-ui/icons/Grain';
+import SaveIcon from '@material-ui/icons/AddBox';
+import BuildIcon from '@material-ui/icons/Menu';
 import MenuBar from '../../app/components/MenuBar';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -61,14 +61,14 @@ describe('Menu Bar render', () => {
     expect(component.find(HomeIcon).exists()).toBe(true);
   });
 
-  it('should display WhatshotIcon', () => {
+  it('should display SaveIcon', () => {
     const { component } = setup();
-    expect(component.find(WhatshotIcon).exists()).toBe(true);
+    expect(component.find(SaveIcon).exists()).toBe(true);
   });
 
-  it('should display GrainIcon', () => {
+  it('should display BuildIcon', () => {
     const { component } = setup();
-    expect(component.find(GrainIcon).exists()).toBe(true);
+    expect(component.find(BuildIcon).exists()).toBe(true);
   });
 
   it('should match exact snapshot', () => {

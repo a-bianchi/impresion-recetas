@@ -44,6 +44,12 @@ const recetaSchema = new Schema({
     index: true,
     required: true
   },
+  affiliated: {
+    type: String,
+    maxlength: 12,
+    minlength: 12,
+    index: true
+  },
   name: {
     type: String,
     maxlength: 150,
@@ -61,12 +67,12 @@ const recetaSchema = new Schema({
   type: {
     type: String,
     uppercase: true,
-    enum: ['MEPPES', 'CENTRALIZADO', 'EXEPCION']
+    enum: ['MEPPES', 'CENTRALIZADO', 'EXEPCION', 'AMBULATORIO']
   },
   state: {
     type: String,
     uppercase: true,
-    enum: ['PENDIENTE', 'APROBADO', 'RECHAZADO'],
+    enum: ['PENDIENTE', 'APROBADO', 'RECHAZADO', 'AUDITADO'],
     default: 'PENDIENTE'
   },
   entity: {
@@ -78,11 +84,21 @@ const recetaSchema = new Schema({
     type: Boolean,
     default: false
   },
+  atPrinted: { type: Date, index: true },
   delivered: {
     type: Boolean,
     default: false
   },
-  time: { type: Date, default: Date.now, required: true }
+  atDelivered: { type: Date, index: true },
+  initiated: { type: String },
+  authorizations: [
+    {
+      numeroAutorizacion: { type: String },
+      numeroReceta: { type: String },
+      estado: { type: Boolean }
+    }
+  ],
+  time: { type: Date, default: Date.now, required: true, index: true }
 });
 
 export default mongoose.model('Receta', recetaSchema);

@@ -101,30 +101,30 @@ const viewRecetas = async (
           const nowYear = new Date().getFullYear().toString();
           if (element[1].childNodes[0].textContent.substr(6) === nowYear) {
             // If tiene observacion se parsea y luego se imprime
+            const numberTramite = document.getElementsByTagName('tr')[1]
+              .childNodes[1].textContent;
+            const numberAfiliado = document.getElementsByTagName('tr')[1]
+              .childNodes[2].textContent;
+            const fechaInicio = document.getElementsByTagName('tr')[1]
+              .childNodes[0].textContent;
+            observaciones = {
+              numberAfiliado,
+              numberTramite,
+              fechaInicio
+            };
             if (
               element[1].childNodes[4].textContent.trim() === 'Leer' &&
               printObservaciones
             ) {
               const obsHtml = document.getElementsByTagName('tr')[1]
                 .childNodes[4].innerHTML;
-              const numberTramite = document.getElementsByTagName('tr')[1]
-                .childNodes[1].textContent;
-              const numberAfiliado = document.getElementsByTagName('tr')[1]
-                .childNodes[2].textContent;
-              const fechaInicio = document.getElementsByTagName('tr')[1]
-                .childNodes[0].textContent;
               const observacion = obsHtml
                 .substring(
                   obsHtml.lastIndexOf('(') + 1,
                   obsHtml.lastIndexOf(')')
                 )
                 .replace('consul_tramite_obser.php?observa= ', '');
-              observaciones = {
-                numberAfiliado,
-                numberTramite,
-                fechaInicio,
-                observacion
-              };
+              observaciones.observacion = observacion;
             }
             // If tramite esta aprobado click en "Ver recetas"
             if (
@@ -148,13 +148,15 @@ const viewRecetas = async (
   }
 };
 
-// Devuelve una arreglo de un objeto con numero de autorizacion de cada receta y un boolean con estado
+// Devuelve arreglo de tipo object con numero de autorizacion de cada receta y boolean con estado
 const getArrayAutorizaciones = async page => {
   try {
     const response = await page.evaluate(async () => {
       // Array con todas las tables
-      const arrayAutorizaciones = [];
+      let arrayAutorizaciones = [];
       const tables = Array.from(document.querySelectorAll('table'));
+
+      console.log(tables);
 
       tables.map(async t => {
         // Evaluo si esta autorizada o rechazada la provicion el resultado es un booleano
@@ -162,8 +164,8 @@ const getArrayAutorizaciones = async page => {
           t.lastChild.children[4].children[0].children[0].children[0].value ===
           'Imprimir Recetas';
         arrayAutorizaciones.push({
-          numeroAutorizacion: t.lastChild.children[4].children[0].children[0].children[1].value.trim(),
-          numeroReceta: t.lastChild.children[1].cells[1].textContent.trim(),
+          numero: t.lastChild.children[4].children[0].children[0].children[1].value.trim(),
+          receta: t.lastChild.children[1].cells[1].textContent.trim(),
           estado: estadoAutorizacion
         });
       });
@@ -343,10 +345,15 @@ const generateMeppes = async (numeroTramite, usuario, pathSelected) => {
     }
 
     await browser.close();
-    return objectResponse;
+
+    return {
+      error: false,
+      message: `Se descargaron ${objectResponse.autorizaciones.length} recetas autorizadas!`,
+      response: objectResponse
+    };
   } catch (e) {
     console.log(e);
-    return e;
+    return { error: true, message: e.message, response: '' };
   }
 };
 

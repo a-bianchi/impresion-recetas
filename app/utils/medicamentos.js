@@ -94,7 +94,8 @@ const existRecetas = async (usuario, numeroTramite) => {
 
     const response = await page.evaluate(() => {
       const receta = document.getElementsByName('receta_nro');
-      if (receta) {
+
+      if (receta.length !== 0) {
         return {
           estado: true,
           recetas: document.getElementsByName('receta_nro')[0].childElementCount
@@ -173,10 +174,16 @@ const generateMedicamentos = async (numeroTramite, usuario, pathSelected) => {
       }
     }
 
-    return objectResponse;
+    return {
+      error: false,
+      message: `Se descargaron ${
+        objectResponse.autorizaciones.length
+      } recetas autorizadas!`,
+      response: objectResponse
+    };
   } catch (e) {
     console.log(e);
-    return e;
+    return { error: true, message: e.message, response: objectResponse };
   }
 };
 

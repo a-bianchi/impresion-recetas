@@ -1,35 +1,39 @@
-import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
+import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import ButtonCustomIcon from './ButtonCustomIcon';
+import { OptionsContext } from '../context/OptionsContext';
 
-const options = ['Tramite', 'Dni', 'Apellido', 'Nombre', 'Entidad', 'Fecha'];
+const propTypes = {
+  options: PropTypes.arrayOf(PropTypes.string).isRequired
+};
 
 const ITEM_HEIGHT = 48;
 
-export default function MenuFilter() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+const MenuFilter = ({ options }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget);
-  }
+  const { select, setSelect } = useContext(OptionsContext);
 
-  function handleClose() {
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
+
+  const handleOption = op => {
+    setSelect(op);
+    setAnchorEl(null);
+  };
 
   return (
-    <div>
-      <IconButton
-        aria-label="more"
-        aria-controls="long-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <FilterListIcon />
-      </IconButton>
+    <React.Fragment>
+      <ButtonCustomIcon handleClick={handleClick} Icon={FilterListIcon} />
       <Menu
         id="long-menu"
         anchorEl={anchorEl}
@@ -46,13 +50,17 @@ export default function MenuFilter() {
         {options.map(option => (
           <MenuItem
             key={option}
-            selected={option === 'Pyxis'}
-            onClick={handleClose}
+            selected={option === select}
+            onClick={() => handleOption(option)}
           >
             {option}
           </MenuItem>
         ))}
       </Menu>
-    </div>
+    </React.Fragment>
   );
-}
+};
+
+MenuFilter.propTypes = propTypes;
+
+export default MenuFilter;

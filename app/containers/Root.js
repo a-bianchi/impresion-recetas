@@ -15,7 +15,7 @@ export default class Root extends Component<Props> {
         <MenuBar />
         <main>
           <div>
-            <Container maxWidth="md">
+            <Container maxWidth="xl">
               <Routes />
             </Container>
           </div>

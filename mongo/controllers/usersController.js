@@ -11,6 +11,7 @@ type user = {
   password: string,
   region: string,
   delegation: string,
+  folder: string,
   time: Date
 };
 

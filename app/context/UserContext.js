@@ -21,6 +21,7 @@ const UserContextProvider = props => {
     password: '',
     region: '',
     delegation: '',
+    folder: '',
     error: null
   });
   const getUSer = () => {
@@ -50,7 +51,7 @@ const UserContextProvider = props => {
       })
       .catch(err => {
         console.log(err.message);
-        user.error = err;
+        user.error = true;
         setUser(user);
       });
   };

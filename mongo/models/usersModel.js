@@ -31,7 +31,15 @@ const userSchema = new Schema({
     index: true,
     required: [true, 'Delegación es requerida']
   },
-  time: { type: Date, default: Date.now, required: [true, 'Time es requerido'] }
+  folder: {
+    type: String
+  },
+  time: {
+    type: Date,
+    default: Date.now,
+    required: [true, 'Time es requerido'],
+    index: true
+  }
 });
 
 export default mongoose.model('User', userSchema);

@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import RecetaForm from '../components/RecetaForm';
 import { RecetasContext } from '../context/RecetasContext';
 import { UserContext } from '../context/UserContext';
+import PaperForm from '../components/PaperForm';
 
 const CargarPage = () => {
   const { addReceta } = useContext(RecetasContext);
@@ -13,20 +14,21 @@ const CargarPage = () => {
     return date.substr(13, 2);
   };
 
-  const insertReceta = recetaData => {
+  const insertReceta = async recetaData => {
     recetaData.region = user.region;
     recetaData.delegation = user.delegation;
-    addReceta(recetaData);
+    await addReceta(recetaData);
   };
 
   return (
-    <div>
+    <PaperForm>
       <RecetaForm
+        title="Cargar Receta"
         handleAction={insertReceta}
         receta={{ year: yearNow() }}
         inputsDisabled={{ yearDisabled: true, stateDisabled: true }}
       />
-    </div>
+    </PaperForm>
   );
 };
 

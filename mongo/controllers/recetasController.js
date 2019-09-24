@@ -4,6 +4,7 @@ import { addZerosRigth } from '../../app/utils/functions';
 const Receta = mongoose.model('Receta');
 
 type receta = {
+  _id: object,
   tramite: number,
   region: string,
   delegation: string,
@@ -16,12 +17,14 @@ type receta = {
   state: string,
   entity: string,
   printed: boolean,
+  atPrinted: Date,
   delivered: boolean,
+  atDelivered: Date,
   time: Date
 };
 
-const allRecetas = () => {
-  return Receta.find({})
+const allRecetas = delivered => {
+  return Receta.find({ delivered })
     .sort({ time: 1 })
     .exec();
 };
@@ -45,7 +48,8 @@ const getByIdRecetas = id => {
   return Receta.findById(id).exec();
 };
 
-const updateRecetas = (id, data: receta) => {
+const updateRecetas = (data: receta) => {
+  const { _id } = data;
   data.region = addZerosRigth(2, data.region);
   data.delegation = addZerosRigth(3, data.delegation);
   data.number = addZerosRigth(7, data.number);
@@ -54,13 +58,12 @@ const updateRecetas = (id, data: receta) => {
   data.tramite = Number(
     `${data.region}${data.delegation}${data.number}${data.year}`
   );
-  return Receta.findOneAndUpdate({ _id: id }, data, {
-    new: true,
+  return Receta.findOneAndUpdate({ _id }, data, {
     useFindAndModify: false
   }).exec();
 };
 
-const deletaRecetas = id => {
+const deletedRecetas = id => {
   return Receta.findByIdAndRemove(id, { useFindAndModify: false }).exec();
 };
 
@@ -69,5 +72,5 @@ export {
   createRecetas,
   getByIdRecetas,
   updateRecetas,
-  deletaRecetas
+  deletedRecetas
 };
