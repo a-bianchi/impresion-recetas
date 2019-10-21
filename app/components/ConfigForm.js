@@ -20,7 +20,7 @@ const propTypes = {
     region: PropTypes.string,
     delegation: PropTypes.string,
     folder: PropTypes.string,
-    puppeterfolder: PropTypes.string
+    puppeteerfolder: PropTypes.string
   })
 };
 
@@ -295,7 +295,13 @@ const ConfigForm = ({ handleAction, user, title }) => {
 ConfigForm.defaultProps = {
   title: '',
   handleAction: () => {},
-  user: { name: '', password: '', region: '', delegation: '' }
+  user: {
+    name: '',
+    password: '',
+    region: '',
+    delegation: '',
+    puppeteerfolder: ''
+  }
 };
 
 ConfigForm.propTypes = propTypes;
