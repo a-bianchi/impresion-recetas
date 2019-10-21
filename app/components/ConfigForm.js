@@ -19,7 +19,8 @@ const propTypes = {
     password: PropTypes.string,
     region: PropTypes.string,
     delegation: PropTypes.string,
-    folder: PropTypes.string
+    folder: PropTypes.string,
+    puppeterfolder: PropTypes.string
   })
 };
 
@@ -60,7 +61,10 @@ const formValidationSchema = Yup.object().shape({
     .min(3, 'Por favor ingrese no menos de 2 caracteres')
     .required('Por favor ingrese una delegación'),
   folder: Yup.string().required(
-    'Por favor ingrese folder donde guardar las recetas'
+    'Por favor ingrese una ruta donde guardar las recetas'
+  ),
+  puppeteerfolder: Yup.string().required(
+    'Por favor ingrese la ruta donde se instaló puppeter'
   )
 });
 
@@ -78,7 +82,10 @@ const ConfigForm = ({ handleAction, user, title }) => {
           password: user.password ? user.password : '',
           region: user.region ? user.region : '',
           delegation: user.delegation ? user.delegation : '',
-          folder: user.folder ? user.folder : __dirname
+          folder: user.folder ? user.folder : __dirname,
+          puppeteerfolder: user.puppeteerfolder
+            ? user.puppeteerfolder
+            : './node_modules/puppeteer/.local-chromium/win64-656675/chrome-win/chrome.exe'
         }}
         onSubmit={(values, { resetForm }) => {
           setAlert({
@@ -108,7 +115,7 @@ const ConfigForm = ({ handleAction, user, title }) => {
                   className={classes.formControl}
                   error={!!errors.folder}
                 >
-                  <InputLabel htmlFor="password-error">folder</InputLabel>
+                  <InputLabel htmlFor="folder-error">folder</InputLabel>
                   <Input
                     id="folder-error"
                     data-test="input-folder"
@@ -124,6 +131,35 @@ const ConfigForm = ({ handleAction, user, title }) => {
                       data-test="errorMessagefolder"
                     >
                       {errors.foldersword}
+                    </FormHelperText>
+                  ) : null}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <FormControl
+                  required
+                  fullWidth
+                  className={classes.formControl}
+                  error={!!errors.puppeteerfolder}
+                >
+                  <InputLabel htmlFor="puppeteerfolder-error">
+                    puppeter folder
+                  </InputLabel>
+                  <Input
+                    id="puppeteerfolder-error"
+                    data-test="input-puppeteerfolder"
+                    name="puppeteerfolder"
+                    type="text"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.puppeteerfolder}
+                  />
+                  {errors.puppeteerfolder && touched.puppeteerfolder ? (
+                    <FormHelperText
+                      className={classes.error}
+                      data-test="errorMessagePuppeteerFolder"
+                    >
+                      {errors.puppeteerfolder}
                     </FormHelperText>
                   ) : null}
                 </FormControl>

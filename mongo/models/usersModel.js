@@ -34,6 +34,9 @@ const userSchema = new Schema({
   folder: {
     type: String
   },
+  puppeteerfolder: {
+    type: String
+  },
   time: {
     type: Date,
     default: Date.now,

@@ -247,9 +247,9 @@ const generatePdfProvicion = async (
   }
 };
 
-const generateMeppes = async (numeroTramite, usuario, pathSelected) => {
+const generateMeppes = async (numeroTramite, usuario, pathSelected, executablePath) => {
   try {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ executablePath:executablePath , headless: true });
     const page = await browser.newPage();
     const region = numeroTramite.substr(0, 2);
     const today = currentDate();

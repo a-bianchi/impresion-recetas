@@ -84,9 +84,12 @@ const searchNumberTramite = async (page, numeroTramite) => {
 };
 
 // Si existe tramite aprobado retorna true y la cantidad de recetas en caso contrario false
-const existRecetas = async (usuario, numeroTramite) => {
+const existRecetas = async (usuario, numeroTramite, executablePath) => {
   try {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      executablePath,
+      headless: true
+    });
     const page = await browser.newPage();
 
     await loginMedicamentos(page, usuario);
@@ -137,7 +140,12 @@ const generatePdfProvicion = async (page, pathFolderSavePdf, keyReceta) => {
   }
 };
 
-const generateMedicamentos = async (numeroTramite, usuario, pathSelected) => {
+const generateMedicamentos = async (
+  numeroTramite,
+  usuario,
+  pathSelected,
+  executablePath
+) => {
   try {
     const today = currentDate();
     const objectResponse = {
@@ -150,7 +158,11 @@ const generateMedicamentos = async (numeroTramite, usuario, pathSelected) => {
 
     await createFolder(`${pathSelected}/medicamentos`);
 
-    const { estado, recetas } = await existRecetas(usuario, numeroTramite);
+    const { estado, recetas } = await existRecetas(
+      usuario,
+      numeroTramite,
+      executablePath
+    );
 
     if (estado) {
       await createFolder(`${pathSelected}/medicamentos/${today}`);
@@ -159,7 +171,10 @@ const generateMedicamentos = async (numeroTramite, usuario, pathSelected) => {
       objectResponse.estado = 'Autorizado';
 
       for (let r = 0; r < recetas; r++) {
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({
+          executablePath,
+          headless: true
+        });
         const page = await browser.newPage();
 
         await loginMedicamentos(page, usuario);
@@ -176,9 +191,7 @@ const generateMedicamentos = async (numeroTramite, usuario, pathSelected) => {
 
     return {
       error: false,
-      message: `Se descargaron ${
-        objectResponse.autorizaciones.length
-      } recetas autorizadas!`,
+      message: `Se descargaron ${objectResponse.autorizaciones.length} recetas autorizadas!`,
       response: objectResponse
     };
   } catch (e) {

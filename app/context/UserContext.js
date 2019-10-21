@@ -22,6 +22,7 @@ const UserContextProvider = props => {
     region: '',
     delegation: '',
     folder: '',
+    puppeteerfolder: '',
     error: null
   });
   const getUSer = () => {

@@ -38,13 +38,19 @@ const HomePage = () => {
     let result = {};
     const { tramite, type } = data;
     if (type === 'MEPPES') {
-      result = await generateMeppes(tramite.toString(), user, user.folder);
+      result = await generateMeppes(
+        tramite.toString(),
+        user,
+        user.folder,
+        user.puppeteerfolder
+      );
       console.log(result);
     } else {
       result = await generateMedicamentos(
         tramite.toString(),
         user,
-        user.folder
+        user.folder,
+        user.puppeteerfolder
       );
       console.log(result);
     }

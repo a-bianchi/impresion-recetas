@@ -12,6 +12,7 @@ type user = {
   region: string,
   delegation: string,
   folder: string,
+  puppeteerfolder: string,
   time: Date
 };
 

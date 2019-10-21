@@ -6,5 +6,10 @@
         "config": "configs/webpack.config.eslint.js"
       }
     }
+  },
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true
   }
 }
