@@ -153,7 +153,7 @@ const getArrayAutorizaciones = async page => {
   try {
     const response = await page.evaluate(async () => {
       // Array con todas las tables
-      let arrayAutorizaciones = [];
+      const arrayAutorizaciones = [];
       const tables = Array.from(document.querySelectorAll('table'));
 
       console.log(tables);
@@ -247,9 +247,20 @@ const generatePdfProvicion = async (
   }
 };
 
-const generateMeppes = async (numeroTramite, usuario, pathSelected, executablePath) => {
+const generateMeppes = async (
+  numeroTramite,
+  usuario,
+  pathSelected,
+  executablePath
+) => {
   try {
-    const browser = await puppeteer.launch({ executablePath:executablePath , headless: true });
+    // Windows ignoreDefaultArgs: ['--disable-extensions'],
+    // Linux args: ['--no-sandbox', '--disable-setuid-sandbox']
+    // executablePath,
+    const browser = await puppeteer.launch({
+      executablePath,
+      headless: true
+    });
     const page = await browser.newPage();
     const region = numeroTramite.substr(0, 2);
     const today = currentDate();

@@ -86,6 +86,8 @@ const searchNumberTramite = async (page, numeroTramite) => {
 // Si existe tramite aprobado retorna true y la cantidad de recetas en caso contrario false
 const existRecetas = async (usuario, numeroTramite, executablePath) => {
   try {
+    // Windows ignoreDefaultArgs: ['--disable-extensions'],
+    // Linux args: ['--no-sandbox', '--disable-setuid-sandbox']
     const browser = await puppeteer.launch({
       executablePath,
       headless: true

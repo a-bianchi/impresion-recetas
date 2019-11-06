@@ -54,13 +54,10 @@
       "git add"
     ]
   },
-  "config": {
-    "puppeteer_skip_chromium_download": true
-  },
   "main": "./app/main.prod.js",
   "build": {
     "productName": "ImpresionRecetas",
-    "appId": "org.develar.ElectronReact",
+    "appId": "org.impresionrecetas",
     "files": [
       "app/dist/",
       "app/app.html",
@@ -250,6 +247,7 @@
     "clsx": "^1.0.4",
     "connected-react-router": "^6.3.2",
     "core-js": "2",
+    "crypto": "^1.0.1",
     "devtron": "^1.4.0",
     "electron-debug": "^2.1.0",
     "electron-log": "^3.0.4",
@@ -260,14 +258,13 @@
     "mongoose": "^5.6.9",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
-    "puppeteer": "^1.20.0",
+    "puppeteer": "^2.0.0",
+    "puppeteer-core": "^2.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.2",
-    "react-redux": "^7.1.1",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
-    "redux": "^4.0.4",
     "source-map-support": "^0.5.11",
     "webfontloader": "^1.6.28",
     "yup": "^0.27.0"
@@ -280,5 +277,10 @@
   "collective": {
     "url": "https://opencollective.com/electron-react-boilerplate-594"
   },
-  "browserslist": "electron 1.6"
+  "browserslist": "electron 1.6",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 }

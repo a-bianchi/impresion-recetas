@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { dbm } from '../local_config/configs.json';
+import dbm from '../local_config/configs';
 
 const connect = () => {
   mongoose.Promise = global.Promise;
