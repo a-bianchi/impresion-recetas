@@ -13,6 +13,7 @@ type receta = {
   dni: string,
   name: string,
   lastname: string,
+  observations: string,
   type: string,
   state: string,
   entity: string,

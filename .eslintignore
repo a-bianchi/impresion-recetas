@@ -48,6 +48,7 @@ main.js
 main.js.map
 app/utils/medicamentos.js
 app/utils/meppes.js
+mongo/index.js
 
 .idea
 npm-debug.log.*

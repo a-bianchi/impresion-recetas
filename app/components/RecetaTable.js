@@ -72,6 +72,9 @@ const useStyles = makeStyles(theme => ({
   },
   cellrejected: {
     backgroundColor: '#ff1744'
+  },
+  cellchive: {
+    backgroundColor: '#ff9100'
   }
 }));
 

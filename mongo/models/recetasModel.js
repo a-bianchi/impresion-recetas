@@ -53,16 +53,18 @@ const recetaSchema = new Schema({
   name: {
     type: String,
     maxlength: 150,
-    minlength: 2,
     index: true,
     uppercase: true
   },
   lastname: {
     type: String,
     maxlength: 150,
-    minlength: 2,
     index: true,
     uppercase: true
+  },
+  observations: {
+    type: String,
+    maxlength: 250
   },
   type: {
     type: String,

@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React, { useContext } from 'react';
+import Typography from '@material-ui/core/Typography';
 import RecetaForm from '../components/RecetaForm';
 import { RecetasContext } from '../context/RecetasContext';
 import { UserContext } from '../context/UserContext';
@@ -22,8 +23,10 @@ const CargarPage = () => {
 
   return (
     <PaperForm>
+      <Typography component="h2" variant="h6" color="primary" gutterBottom>
+        Cargar Receta
+      </Typography>
       <RecetaForm
-        title="Cargar Receta"
         handleAction={insertReceta}
         receta={{ year: yearNow() }}
         inputsDisabled={{ yearDisabled: true, stateDisabled: true }}

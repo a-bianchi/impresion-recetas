@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { TextField, Button, makeStyles } from '@material-ui/core';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
@@ -14,7 +13,6 @@ import { AlertContext } from '../context/AlertContext';
 
 const propTypes = {
   handleAction: PropTypes.func,
-  title: PropTypes.string,
   receta: recetaProps,
   inputsDisabled: inputsDisabledProps
 };
@@ -88,12 +86,12 @@ const formValidationSchema = Yup.object().shape({
   year: Yup.string()
     .max(2, 'Por favor ingrese no mas de 2 caracteres')
     .min(2, 'Por favor ingrese no menos de 2 caracteres'),
-  name: Yup.string()
-    .max(150, 'Por favor ingrese no más de 150 caracteres')
-    .min(2, 'Por favor ingrese no menos de 2 caracteres'),
-  lastname: Yup.string()
-    .max(150, 'Por favor ingrese no más de 150 caracteres')
-    .min(2, 'Por favor ingrese no menos de 2 caracteres'),
+  name: Yup.string().max(150, 'Por favor ingrese no más de 150 caracteres'),
+  lastname: Yup.string().max(150, 'Por favor ingrese no más de 150 caracteres'),
+  observations: Yup.string().max(
+    250,
+    'Por favor ingrese no más de 250 caracteres'
+  ),
   type: Yup.string().oneOf([
     'MEPPES',
     'CENTRALIZADO',
@@ -106,7 +104,7 @@ const formValidationSchema = Yup.object().shape({
     .min(2, 'Por favor ingrese no menos de 2 caracteres')
 });
 
-const RecetaForm = ({ handleAction, receta, inputsDisabled, title }) => {
+const RecetaForm = ({ handleAction, receta, inputsDisabled }) => {
   const {
     _id,
     number,
@@ -114,6 +112,7 @@ const RecetaForm = ({ handleAction, receta, inputsDisabled, title }) => {
     dni,
     name,
     lastname,
+    observations,
     type,
     state,
     entity,
@@ -126,6 +125,7 @@ const RecetaForm = ({ handleAction, receta, inputsDisabled, title }) => {
     dniDisabled,
     nameDisabled,
     lastnameDisabled,
+    observationsDisabled,
     typeDisabled,
     stateDisabled,
     entityDisabled
@@ -134,9 +134,6 @@ const RecetaForm = ({ handleAction, receta, inputsDisabled, title }) => {
   const { setAlert } = useContext(AlertContext);
   return (
     <React.Fragment>
-      <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        {title}
-      </Typography>
       <Formik
         initialValues={{
           _id: _id || '',
@@ -144,6 +141,7 @@ const RecetaForm = ({ handleAction, receta, inputsDisabled, title }) => {
           year: year || '',
           name: name || '',
           lastname: lastname || '',
+          observations: observations || '',
           dni: dni || '',
           type: type || 'MEPPES',
           state: state || 'PENDIENTE',
@@ -343,6 +341,33 @@ const RecetaForm = ({ handleAction, receta, inputsDisabled, title }) => {
                 <FormControl
                   fullWidth
                   className={classes.formControl}
+                  error={!!errors.lastname}
+                >
+                  <InputLabel htmlFor="lastname-error">Apellido</InputLabel>
+                  <Input
+                    id="lastname-error"
+                    data-test="input-lastname"
+                    disabled={lastnameDisabled}
+                    name="lastname"
+                    type="text"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.lastname}
+                  />
+                  {errors.lastname && touched.lastname ? (
+                    <FormHelperText
+                      className={classes.error}
+                      data-test="errorMessageLastname"
+                    >
+                      {errors.lastname}
+                    </FormHelperText>
+                  ) : null}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl
+                  fullWidth
+                  className={classes.formControl}
                   error={!!errors.name}
                 >
                   <InputLabel htmlFor="name-error">Nombre</InputLabel>
@@ -366,29 +391,31 @@ const RecetaForm = ({ handleAction, receta, inputsDisabled, title }) => {
                   ) : null}
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <FormControl
                   fullWidth
                   className={classes.formControl}
-                  error={!!errors.lastname}
+                  error={!!errors.observations}
                 >
-                  <InputLabel htmlFor="lastname-error">Apellido</InputLabel>
+                  <InputLabel htmlFor="observations-error">
+                    Observaciones
+                  </InputLabel>
                   <Input
-                    id="lastname-error"
-                    data-test="input-lastname"
-                    disabled={lastnameDisabled}
-                    name="lastname"
+                    id="observations-error"
+                    data-test="input-observations"
+                    disabled={observationsDisabled}
+                    name="observations"
                     type="text"
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.lastname}
+                    value={values.observations}
                   />
-                  {errors.lastname && touched.lastname ? (
+                  {errors.observations && touched.observations ? (
                     <FormHelperText
                       className={classes.error}
-                      data-test="errorMessageLastname"
+                      data-test="errorMessageObservations"
                     >
-                      {errors.lastname}
+                      {errors.observations}
                     </FormHelperText>
                   ) : null}
                 </FormControl>
@@ -414,7 +441,6 @@ const RecetaForm = ({ handleAction, receta, inputsDisabled, title }) => {
 };
 
 RecetaForm.defaultProps = {
-  title: 'Sin Titulo',
   handleAction: () => {},
   receta: {
     number: '',
@@ -422,6 +448,7 @@ RecetaForm.defaultProps = {
     dni: '',
     name: '',
     lastname: '',
+    observations: '',
     type: '',
     state: '',
     entity: ''
@@ -432,6 +459,7 @@ RecetaForm.defaultProps = {
     dniDisabled: false,
     nameDisabled: false,
     lastnameDisabled: false,
+    observationsDisabled: false,
     typeDisabled: false,
     stateDisabled: false,
     entityDisabled: false

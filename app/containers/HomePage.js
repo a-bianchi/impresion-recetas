@@ -5,6 +5,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Modal from '@material-ui/core/Modal';
 import RecetaTable from '../components/RecetaTable';
 import OptionsContextProvider from '../context/OptionsContext';
 import { RecetasContext } from '../context/RecetasContext';
@@ -16,12 +17,14 @@ import generateMedicamentos from '../utils/medicamentos';
 import AlertDialog from '../components/AlertDialog';
 import ContentViewModal from '../components/ContentViewModal';
 import RecetaForm from '../components/RecetaForm';
+import LinearProgressCustom from '../components/LinearProgressCustom';
 
 const HomePage = () => {
   const [view, setView] = useState(false);
   const [modify, setModify] = useState(false);
   const [receta, setReceta] = useState({});
   const [delivered, setDelivered] = useState(false);
+  const [open, setOpen] = React.useState(false);
   const { user, getUSer } = useContext(UserContext);
   const { recetas, setRecetas, getRecetas, delReceta, modReceta } = useContext(
     RecetasContext
@@ -34,9 +37,18 @@ const HomePage = () => {
     getRecetas(delivered);
   }, []);
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const clickPrintButton = async data => {
     let result = {};
     const { tramite, type } = data;
+    handleOpen();
     if (type === 'MEPPES') {
       result = await generateMeppes(
         tramite.toString(),
@@ -63,6 +75,7 @@ const HomePage = () => {
       data.affiliated = response.afiliado || '';
       data.state = response.estado || '';
       result = await modReceta(data);
+      getRecetas(delivered);
       setAlert({
         open: true,
         variant: error ? 'error' : 'success',
@@ -75,6 +88,7 @@ const HomePage = () => {
         message: error ? message : 'Pendiente de autorización!'
       });
     }
+    handleClose();
   };
 
   const clickDeletedButton = async data => {
@@ -110,6 +124,7 @@ const HomePage = () => {
           rec.dni = recetaData.dni;
           rec.name = recetaData.name;
           rec.lastname = recetaData.lastname;
+          rec.observations = recetaData.observations;
           rec.type = recetaData.type;
           rec.state = recetaData.state;
           rec.entity = recetaData.entity;
@@ -134,7 +149,7 @@ const HomePage = () => {
     setReceta(data);
   };
 
-  const clickViewButton = data => {
+  const clickViewButton = async data => {
     setView(true);
     setModify(false);
     setModal(true);
@@ -175,6 +190,9 @@ const HomePage = () => {
         }
         label="Entregadas"
       />
+      <Modal open={open} onClose={handleClose}>
+        <LinearProgressCustom />
+      </Modal>
       <RecetaTable
         rows={recetas}
         handleActionPrint={clickPrintButton}
