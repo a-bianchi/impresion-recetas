@@ -7,6 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import RecetaTable from '../components/RecetaTable';
 import OptionsContextProvider from '../context/OptionsContext';
 import { RecetasContext } from '../context/RecetasContext';
@@ -20,6 +21,7 @@ import ContentViewModal from '../components/ContentViewModal';
 import RecetaForm from '../components/RecetaForm';
 import LinearProgressCustom from '../components/LinearProgressCustom';
 import BadgesCustom from '../components/BadgesCustom';
+import PaperForm from '../components/PaperForm';
 
 const HomePage = () => {
   const [view, setView] = useState(false);
@@ -195,6 +197,33 @@ const HomePage = () => {
       ) : (
         ''
       )}
+      <Modal open={open} onClose={handleClose}>
+        <div>
+          <LinearProgressCustom />
+          <PaperForm>
+            <Typography
+              component="h2"
+              variant="h6"
+              color="primary"
+              gutterBottom
+            >
+              Importante!!
+            </Typography>
+            <Typography gutterBottom>
+              1) No cerrar el programa hasta que finalice la verificación.
+            </Typography>
+            <Typography gutterBottom>
+              2) Si la conexión a internet no es buena o se interrumpe el
+              proceso de verificación puede suceder que no se terminen de bajar
+              todas las provisiones.
+            </Typography>
+            <Typography gutterBottom>
+              3) En caso que un trámite demore más de lo habitual se aconseja
+              verificar manualmente.
+            </Typography>
+          </PaperForm>
+        </div>
+      </Modal>
       <FormControlLabel
         control={
           <Switch
@@ -209,9 +238,6 @@ const HomePage = () => {
         }
         label="Entregadas"
       />
-      <Modal open={open} onClose={handleClose}>
-        <LinearProgressCustom />
-      </Modal>
       <RecetaTable
         rows={recetas}
         handleActionPrint={clickPrintButton}
