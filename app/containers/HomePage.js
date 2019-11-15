@@ -18,6 +18,7 @@ import AlertDialog from '../components/AlertDialog';
 import ContentViewModal from '../components/ContentViewModal';
 import RecetaForm from '../components/RecetaForm';
 import LinearProgressCustom from '../components/LinearProgressCustom';
+import BadgesCustom from '../components/BadgesCustom';
 
 const HomePage = () => {
   const [view, setView] = useState(false);
@@ -142,6 +143,15 @@ const HomePage = () => {
     setModal(false);
   };
 
+  const handleAllMedicamentos = () => {
+    recetas.map(r => {
+      clickPrintButton(r);
+      console.log(r);
+      return r;
+    });
+    return true;
+  };
+
   const clickModifyButton = async data => {
     setView(false);
     setModify(true);
@@ -158,6 +168,10 @@ const HomePage = () => {
 
   return (
     <OptionsContextProvider>
+      <button type="button" onClick={handleAllMedicamentos}>
+        Open Modal
+      </button>
+      <BadgesCustom recetas={recetas.length} />
       {view ? (
         <AlertDialog title="Detalle">
           <ContentViewModal receta={receta} />
