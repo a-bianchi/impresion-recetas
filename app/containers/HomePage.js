@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
 import RecetaTable from '../components/RecetaTable';
 import OptionsContextProvider from '../context/OptionsContext';
 import { RecetasContext } from '../context/RecetasContext';
@@ -168,9 +169,13 @@ const HomePage = () => {
 
   return (
     <OptionsContextProvider>
-      <button type="button" onClick={handleAllMedicamentos}>
-        Open Modal
-      </button>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleAllMedicamentos}
+      >
+        Verificar Todas
+      </Button>
       <BadgesCustom recetas={recetas.length} />
       {view ? (
         <AlertDialog title="Detalle">
