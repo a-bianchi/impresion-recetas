@@ -54,9 +54,9 @@ yarn package
 👤 **Alejo Bianchi**
 
 * Twitter: [@Alejo40740246](https://twitter.com/Alejo40740246)
-* Github: [@Linusar](https://github.com/Linusar)
+* Github: [@a-bianchi](https://github.com/a-bianchi)
 
 ## 📝 License
 
-Copyright © 2019 [Alejo Bianchi](https://github.com/Linusar).<br />
+Copyright © 2019 [Alejo Bianchi](https://github.com/a-bianchi).<br />
 This project is [MIT](https://github.com/Linusar/impresion-recetas/blob/master/LICENSE) licensed.
